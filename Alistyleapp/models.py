@@ -1,4 +1,5 @@
 from django.db import models
+from Userapp.models import Account
 
 class Bolim(models.Model):
     nom = models.CharField(max_length=50)
@@ -21,8 +22,11 @@ class Mahsulot(models.Model):
     ishlab_ch = models.CharField(max_length=100)
     kafolat = models.CharField(max_length=60)
     yetkazish = models.CharField(max_length=50)
+    olchov = models.CharField(max_length=10, blank=True)
+    min_buyurtma = models.CharField(max_length=10, blank=True)
     mavjud = models.BooleanField(default=True)
     batafsil = models.TextField()
+    chegirma = models.PositiveSmallIntegerField(default=0)
     ichki = models.ForeignKey(Ichki, on_delete=models.SET_NULL, null=True, related_name="ichki_mahsulotlar")
 
     def __str__(self):
@@ -34,3 +38,13 @@ class Media(models.Model):
 
     def __str__(self):
         return self.mahsulot
+
+class Comment(models.Model):
+    mijoz = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True)
+    mahsulot = models.ForeignKey(Mahsulot, on_delete=models.SET_NULL, null=True)
+    izoh = models.CharField(max_length=300)
+    baho = models.PositiveSmallIntegerField(default=4)
+    sana = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.izoh

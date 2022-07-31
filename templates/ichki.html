@@ -186,7 +186,7 @@
 			    <h4 class="card-title"><a href="/ichki/{{ichki.id}}/">{{ ichki.nom }}</a></h4>
 			    <ul class="list-menu">
 					{% for mahsulot in ichki.ichki_mahsulotlar.all|slice:":5" %}
-			    	<li><a href="">{{ mahsulot.nom }}</a></li>
+			    	<li><a href="/mahsulot/{{mahsulot.id}}/">{{ mahsulot.nom }}</a></li>
 					{% endfor %}
 			    </ul>
 			  </div>
