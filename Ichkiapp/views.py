@@ -1,20 +1,40 @@
 from django.shortcuts import render, redirect
 from django.views import View
 
-from Userapp.models import *
 
 from  .models import *
 from Alistyleapp.models import *
 
+from Userapp.models import Account
+
 
 class TanlanganView(View):
-    def get(self, request, pk):
-        a = Account.objects.get(id=pk)
+    def get(self, request):
+        a = Account.objects.get(user=request.user)
         tanlangan = Tanlangan.objects.filter(account=a)
         data = {
+
             "tanlanganlar": tanlangan
         }
         return render(request, "page-profile-wishlist.html", data)
+
+class Tanlangan_ochirView(View):
+    def get(self,request, pk):
+        Tanlangan.objects.get(id=pk).delete()
+        return redirect("tanlangan")
+
+
+class Tanlangan_QoshView(View):
+    def get(self, request, pk):
+        m = Mahsulot.objects.get(id = pk)
+        a = Account.objects.get(user=request.user)
+        tanlangan = Tanlangan.objects.filter(mahsulot=m)
+        if len(tanlangan)==0:
+            Tanlangan.objects.create(
+                mahsulot = m,
+                account = a,
+            )
+        return redirect("savat")
 
 class SavatView(View):
     def get(self, request):
@@ -29,6 +49,8 @@ class SavatView(View):
             "yakuniy": sum(n)-sum(ch)
         }
         return render(request, "page-shopping-cart.html", data )
+
+
 
 class SavatQoshView(View):
     def get(self,request, pk):
