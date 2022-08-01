@@ -8,8 +8,13 @@ from Alistyleapp.models import *
 
 
 class TanlanganView(View):
-    def get(self, request):
-         return render(request, "page-profile-wishlist.html")
+    def get(self, request, pk):
+        a = Account.objects.get(id=pk)
+        tanlangan = Tanlangan.objects.filter(account=a)
+        data = {
+            "tanlanganlar": tanlangan
+        }
+        return render(request, "page-profile-wishlist.html", data)
 
 class SavatView(View):
     def get(self, request):

@@ -6,7 +6,7 @@ from Userapp.models import *
 
 
 class Tanlangan(models.Model):
-    mahsulot = models.ForeignKey(Mahsulot, on_delete=models.CASCADE )
+    mahsulot = models.ForeignKey(Mahsulot, on_delete=models.CASCADE  , related_name="mahsulot_tanlangan")
     account = models.ForeignKey(Account, on_delete=models.CASCADE )
 
 class Savat(models.Model):

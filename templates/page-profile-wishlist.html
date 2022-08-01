@@ -46,7 +46,7 @@
 		<div class="row align-items-center">
 			<div class="col-xl-2 col-lg-3 col-md-12">
 				<a href="{% static 'bootstrap-ecommerce.com' %}" class="brand-wrap">
-					<img class="logo" src="images/logo.png">
+					<img class="logo" src="{% static 'images/logo.png' %} ">
 				</a> <!-- brand-wrap.// -->
 			</div>
 			<div class="col-xl-6 col-lg-5 col-md-6">
@@ -164,7 +164,7 @@
 			<a class="nav-link" href="#">Get the app</a>
 		</li>
 		<li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" href="http://example.com" data-toggle="dropdown">English</a>
+			<a class="nav-link dropdown-toggle" href="{% static 'example.com' %} " data-toggle="dropdown">English</a>
 			<div class="dropdown-menu dropdown-menu-right">
 			<a class="dropdown-item" href="#">Russian</a>
 			<a class="dropdown-item" href="#">French</a>
@@ -208,41 +208,21 @@
 			<div class="card-body">
 
 		<div class="row">
+			{% for tanlangan in tanlanganlar %}
 				<div class="col-md-6">
 					<figure class="itemside mb-4">
-						<div class="aside"><img src="images/items/1.jpg" class="border img-md"></div>
+						{% for media in tanlangan.mahsulot.mahsulot_tanlangan.all|slice:':1' %}
+						<div class="aside"><img src="{{media.rasm.url}}" class="border img-md"></div>
+						{% endfor %}
 						<figcaption class="info">
-							<a href="#" class="title">Great product name goes here</a>
-							<p class="price mb-2">$80</p>
+							<a href="#" class="title">{{tanlangan.mahsulot.nom}}</a>
+							<p class="price mb-2">{{tanlangan.mahsulot.narx}} USD</p>
 							<a href="#" class="btn btn-secondary btn-sm"> Add to cart </a>
 							<a href="#" class="btn btn-danger btn-sm" data-toggle="tooltip" title="" data-original-title="Remove from wishlist"> <i class="fa fa-times"></i> </a>
 						</figcaption>
 					</figure>
 				</div> <!-- col.// -->
-
-				<div class="col-md-6">
-					<figure class="itemside mb-4">
-						<div class="aside"><img src="images/items/2.jpg" class="border img-md"></div>
-						<figcaption class="info">
-							<a href="#" class="title">Men's Jackeet for Winter </a>
-							<p class="price mb-2">$1280</p>
-							<a href="#" class="btn btn-secondary btn-sm"> Add to cart </a>
-							<a href="#" class="btn btn-danger btn-sm" data-toggle="tooltip" title="" data-original-title="Remove from wishlist"> <i class="fa fa-times"></i> </a>
-						</figcaption>
-					</figure>
-				</div> <!-- col.// -->
-
-				<div class="col-md-6">
-					<figure class="itemside mb-4">
-						<div class="aside"><img src="images/items/3.jpg" class="border img-md"></div>
-						<figcaption class="info">
-							<a href="#" class="title">Another book of item goes here </a>
-							<p class="price mb-2">$280</p>
-							<a href="#" class="btn btn-secondary btn-sm"> Add to cart </a>
-							<a href="#" class="btn btn-danger btn-sm" data-toggle="tooltip" title="" data-original-title="Remove from wishlist"> <i class="fa fa-times"></i> </a>
-						</figcaption>
-					</figure>
-				</div> <!-- col.// -->
+			{% endfor %}
 			</div> <!-- row .//  -->
 
 			</div> <!-- card-body.// -->
