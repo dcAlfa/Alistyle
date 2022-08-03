@@ -19,7 +19,7 @@ class Savat(models.Model):
 class Buyurtma(models.Model):
     sana = models.DateField(auto_now_add=True)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    savat = models.ManyToManyField(Savat)
+    savat = models.ManyToManyField(Savat, null=True)
     mah_narx = models.PositiveSmallIntegerField()
-    yet_narx = models.PositiveSmallIntegerField()
+    yet_narx = models.PositiveSmallIntegerField(default=5000)
     umumiy_narx = models.PositiveSmallIntegerField()

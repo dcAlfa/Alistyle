@@ -41,7 +41,9 @@ class Media(models.Model):
 
 class Comment(models.Model):
     mijoz = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True)
-    mahsulot = models.ForeignKey(Mahsulot, on_delete=models.SET_NULL, null=True)
+    mahsulot = models.ForeignKey(Mahsulot, on_delete=models.SET_NULL, null=True
+
+                                 )
     izoh = models.CharField(max_length=300)
     baho = models.PositiveSmallIntegerField(default=4)
     sana = models.DateField(auto_now_add=True)

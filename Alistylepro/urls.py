@@ -24,4 +24,5 @@ urlpatterns = [
     path('savat_q/<int:pk>/', savat_q, name="savat_q"),
     path('savat/<int:pk>/', SavatQoshView.as_view(), name="savat_qosh"),
     path('buyurtma/', BuyurtmaView.as_view(), name="buyurtma"),
+    path('buyurtma_qosh/', BuyurtmaQoshView.as_view(), name="buyurtma-qosh"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

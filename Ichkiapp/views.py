@@ -1,3 +1,4 @@
+from django.db.models import Sum
 from django.shortcuts import render, redirect
 from django.views import View
 
@@ -40,7 +41,7 @@ class SavatView(View):
     def get(self, request):
         ac = Account.objects.get(user=request.user)
         savatlar = Savat.objects.filter(account=ac)
-        ch = [s.mahsulot.chegirma for s in savatlar]
+        ch = [s.mahsulot.chegirma*s.miqdor for s in savatlar]
         n = [s.narx for s in savatlar]
         data = {
             "savatlar": savatlar,
@@ -81,5 +82,24 @@ def savat_q(request, pk):
 
 class BuyurtmaView(View):
     def get(self, request):
-         return render(request, "page-profile-orders.html")
+        account = Account.objects.get(user=request.user)
+        data = {
+            "buyurtmalar":Buyurtma.objects.filter(account = account)
+        }
+        return render(request, "page-profile-orders.html", data)
+
+class BuyurtmaQoshView(View):
+    def get(self, request):
+        account = Account.objects.get(user=request.user)
+        savatlar = Savat.objects.filter(account=account)
+        b1 = Buyurtma.objects.create(
+            account = account,
+            mah_narx = savatlar.aggregate(Sum('narx'))["narx__sum"],
+            umumiy_narx = savatlar.aggregate(Sum('narx'))["narx__sum"]+5000
+        )
+        for s in savatlar:
+            b1.savat.add(s)
+        b1.save()
+        return redirect("buyurtma")
+
 
